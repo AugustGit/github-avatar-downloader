@@ -3,6 +3,8 @@ var fs = require('fs');
 
 var getToken = require('./secrets.js').GITHUB_TOKEN // get from a file that is .gitignore
 
+var repoOwner = process.argv[3]
+var repoName = process.argv[4]
 
 
 console.log('Welcome to the GitHub Avatar Downloader!');
