@@ -3,8 +3,8 @@ var fs = require('fs');
 
 var getToken = require('./secrets.js').GITHUB_TOKEN // get from a file that is .gitignore
 
-var repoOwner = process.argv[3]
-var repoName = process.argv[4]
+var repoOwner = process.argv[2]
+var repoName = process.argv[3]
 
 
 console.log('Welcome to the GitHub Avatar Downloader!');
@@ -44,8 +44,12 @@ function downloadImageByURL(url, filePath) {
 
 //downloadImageByURL("https://avatars2.githubusercontent.com/u/2741?v=3&s=466", "avatars/kvirani.jpg")
 
-getRepoContributors("jquery", "jquery", function(err, result) {
-  if (err) {
+getRepoContributors(repoOwner, repoName, function(err, result) {
+  if(repoOwner == null || repoName == null ){
+    console.log ("Please insert a repoOwner & repoName")
+    return err
+  }
+   else if (err) {
     console.log("Errors:", err);
   }
 //var avatar = []
@@ -62,6 +66,5 @@ getRepoContributors("jquery", "jquery", function(err, result) {
 
     //console.log ("avatar_url: " + avatar )
 });
-
 
 
