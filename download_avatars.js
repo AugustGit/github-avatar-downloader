@@ -25,6 +25,8 @@ request(options, function(err, res, body) {
 
 
 function downloadImageByURL(url, filePath) {
+  //console.log (url)
+  console.log(filePath)
   request(url)
   .on('error', function(err){
     throw err;
@@ -38,19 +40,26 @@ function downloadImageByURL(url, filePath) {
   });
  }
 
-downloadImageByURL("https://avatars2.githubusercontent.com/u/2741?v=3&s=466", "avatars/kvirani.jpg")
+//downloadImageByURL("https://avatars2.githubusercontent.com/u/2741?v=3&s=466", "avatars/kvirani.jpg")
 
 getRepoContributors("jquery", "jquery", function(err, result) {
   if (err) {
     console.log("Errors:", err);
   }
-var avatar = []
+//var avatar = []
+// for(var i = 0; i < result.length; i++) {
+  for(var contributor of result) {
+    console.log(contributor)
+    //avatar.push(result[i].avatar_url)
+    //console.log ("avatar_url: " + avatar )
+    //downloadImageByURL(list, 'avatars/'+ list.login +'.jpg' )
+    //avatar.push(result[i].avatar_url)
+   downloadImageByURL(contributor.avatar_url, 'avatars/'+ contributor.login +'.jpg' )
 
- for(var i = 0; i < result.length; i++) {
-    avatar.push(result[i].avatar_url)
-    downloadImageByURL(avatar, 'avatars/'+ avatar.login +'.jpg' )
-  }
+}
+
     //console.log ("avatar_url: " + avatar )
 });
+
 
 
