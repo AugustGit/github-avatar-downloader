@@ -1,4 +1,5 @@
 var request = require('request');
+var fs = require('fs');
 
 var getToken = require('./secrets.js').GITHUB_TOKEN // get from a file that is .gitignore
 
@@ -22,6 +23,38 @@ request(options, function(err, res, body) {
   });
 }
 
+function downloadImageByURL(url, filePath) {
+  request(url)
+  .on('error', function(err){
+    throw err;
+   })
+  .on('response', function(response){
+    console.log('Downloading.....');
+  })
+  .pipe(fs.createWriteStream(filePath))
+  .on('finish', function(){
+    console.log("Finished downloading");
+  });
+ }
+/*
+request.get(url, function(response) {
+  console.log('Download complete.');
+       })
+       .on('error', function (err) {
+         throw err;
+       })
+       .on('response', function (response) {
+         console.log('Downloading image...');
+         console.log('Response Status Code: ', response.statusCode, response.statusMessage, response.headers['content-type']);
+       })
+       .pipe(fs.createWriteStream('./future.jpg'));
+
+
+  // ...
+}
+*/
+
+
 
 getRepoContributors("jquery", "jquery", function(err, result) {
   if (err) {
@@ -37,15 +70,21 @@ var avatar = []
     console.log ("avatar_url: " + avatar )
 });
 
-function downloadImageByURL(url, filePath) {
-  // ...
-}
-/*
-Result: { message: 'API rate limit exceeded for 69.174.3.130. (But here\'s the good news: Authenticated requests get a higher rate limit. Check out the documentation for more details.)',
-  documentation_url: 'https://developer.github.com/v3/#rate-limiting' }
-avatar_url:
-*/
-// const
 
-//downloadImageByURL("https://avatars2.githubusercontent.com/u/2741?v=3&s=466", "avatars/kvirani.jpg")
-// avatar_url
+/*
++function downloadImageByURL(url, filePath) {
++  request(url)
++  .on('error', function(err){
++    throw err;
++  })
++  .on('response', function(response){
++    console.log('Downloading image...');
++    console.log('HTTP Status', response.statusCode, response.statusMessage);
++    console.log('HTTP Content-Type: \'' + response.headers['content-type'] + '\'');
++  })
++  .pipe(fs.createWriteStream(filePath))
++  .on('finish', function(){
++    console.log("Download complete");
++  });
++}
+*/
