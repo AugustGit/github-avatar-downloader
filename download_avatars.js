@@ -23,6 +23,7 @@ request(options, function(err, res, body) {
   });
 }
 
+
 function downloadImageByURL(url, filePath) {
   request(url)
   .on('error', function(err){
@@ -36,55 +37,20 @@ function downloadImageByURL(url, filePath) {
     console.log("Finished downloading");
   });
  }
-/*
-request.get(url, function(response) {
-  console.log('Download complete.');
-       })
-       .on('error', function (err) {
-         throw err;
-       })
-       .on('response', function (response) {
-         console.log('Downloading image...');
-         console.log('Response Status Code: ', response.statusCode, response.statusMessage, response.headers['content-type']);
-       })
-       .pipe(fs.createWriteStream('./future.jpg'));
 
-
-  // ...
-}
-*/
-
-
+downloadImageByURL("https://avatars2.githubusercontent.com/u/2741?v=3&s=466", "avatars/kvirani.jpg")
 
 getRepoContributors("jquery", "jquery", function(err, result) {
   if (err) {
     console.log("Errors:", err);
   }
-  console.log("Result:", result);
 var avatar = []
 
  for(var i = 0; i < result.length; i++) {
     avatar.push(result[i].avatar_url)
-    }
-      //console.log(avatar_url)
-    console.log ("avatar_url: " + avatar )
+    downloadImageByURL(avatar, 'avatars/'+ avatar.login +'.jpg' )
+  }
+    //console.log ("avatar_url: " + avatar )
 });
 
 
-/*
-+function downloadImageByURL(url, filePath) {
-+  request(url)
-+  .on('error', function(err){
-+    throw err;
-+  })
-+  .on('response', function(response){
-+    console.log('Downloading image...');
-+    console.log('HTTP Status', response.statusCode, response.statusMessage);
-+    console.log('HTTP Content-Type: \'' + response.headers['content-type'] + '\'');
-+  })
-+  .pipe(fs.createWriteStream(filePath))
-+  .on('finish', function(){
-+    console.log("Download complete");
-+  });
-+}
-*/
